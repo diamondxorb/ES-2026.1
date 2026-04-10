@@ -40,6 +40,9 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
+  game1 = [ ["Kristen", "P"], ["Pam", "S"] ]
+  puts rps_game_winner(game1).inspect
+
   tournament = [
     [
       [["Kristen", "P"], ["Dave", "S"]],
