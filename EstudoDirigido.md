@@ -5,7 +5,7 @@
 #### Departamento de Ciência da Computação
 #### Engenharia de Software - 2026.1
 
-![UnB](unb.png)
+![UnB](images/unb.png)
 
 # Como LLM pode promover o aprendizado e o desenvolvimento de aplicações Ruby?
 
