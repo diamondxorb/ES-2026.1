@@ -1,0 +1,51 @@
+<!--  This file is app/views/movies/index.html.erb -->
+<p style="color: green"><%= notice %></p>
+
+<% if flash[:error].present? %>
+  <p style="color: red;"><%= flash[:error] %></p>
+<% end %>
+
+<%#  Part 2: Start here... %>
+
+<h1>Movies</h1>
+
+<div style="margin-bottom: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">
+  <h3>Search TMDb for a movie</h3>
+  <%= form_with url: search_tmdb_movies_path, method: :post, local: true do |form| %>
+    <div>
+      <%= form.label :search_terms, "Search Terms:" %>
+      <%= form.text_field :search_terms %>
+      <%= form.submit "Search TMDb" %>
+    </div>
+  <% end %>
+</div>
+
+<% if @tmdb_error.present? %>
+  <p style="color: red; font-weight: bold;"><%= @tmdb_error %></p>
+<% end %>
+
+<%= form_with url: movies_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :search, "Search by title:" %>
+    <%= form.text_field :search, value: params[:search] %>
+    <%= form.label :rating, "Filter by rating:" %>
+    <%= form.select :rating, options_for_select([["All", "all"], ["G", "G"], ["PG", "PG"], ["PG-13", "PG-13"], ["R", "R"], ["NC-17", "NC-17"]], params[:rating] || "all") %>
+    <%= form.label :sort, "Sort by:" %>
+    <%= form.select :sort, options_for_select([["Newest", ""], ["Title (A-Z)", "title"], ["Release Date", "release_date"]], params[:sort]) %>
+    <%= form.submit "Apply" %>
+    <% if params[:search].present? || (params[:rating].present? && params[:rating] != "all") || params[:sort].present? %>
+      <%= link_to "Clear all", movies_path %>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="movies">
+  <% @movies.each do |movie| %>
+    <%= render movie %>
+    <p>
+      <%= link_to "Show this movie", movie %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New movie", new_movie_path %>
